@@ -16,26 +16,32 @@ public class MainControllerImpl implements MainController {
     private static final Logger LOG = LoggerFactory.getLogger("MainController");
 
     private Display display;
-    private LocalTime time;
+    protected ResourceBundle resourceBundle; //protected - для упрощения тестирования
+    protected LocalTime time; //аналогично
 
     public MainControllerImpl(Display display) {
-        LOG.debug("Constructor");
+        LOG.info("Вызван конструктор");
         this.display = display;
     }
 
     @Override
     public void start() {
-        LOG.debug("start()");
+        LOG.info("Основной алгоритм запущен");
 
-        ResourceBundle resourceBundle = ResourceBundle.getBundle(Const.RESOURCE_BUNDLE_NAME, new UTF8Control());
+        this.resourceBundle = ResourceBundle.getBundle(Const.RESOURCE_BUNDLE_NAME, new UTF8Control());
+        LOG.info("Получен ResourceBundle");
 
         this.time = getTime();
+        LOG.info("Получено текущее время: " + time);
+
         Period period = Period.getPeriod(this.time);
+        LOG.info("Текущее время = " + this.time.toString() + ", определен промежуток = " + period.toString());
 
-        LOG.debug("Текущее время = " + this.time.toString() + ", был определен период = " + period.toString());
+        String greetingMessage = this.resourceBundle.getString( period.getGreetingPropName() );
+        LOG.info("Получено сообщение \"" + greetingMessage + "\"");
 
-        String greetingMessage = resourceBundle.getString( period.getGreetingPropName() );
         this.display.display(greetingMessage);
+        LOG.info("Основной алгоритм завершен\n");
     }
 
     private LocalTime getTime() {

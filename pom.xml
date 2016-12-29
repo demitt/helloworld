@@ -6,13 +6,15 @@
 
     <groupId>ua.demitt.homework</groupId>
     <artifactId>helloworld</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
 
     <properties>
         <jdk.version>1.8</jdk.version>
-        <!--<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>-->
+        <maven-resources-plugin.encoding>UTF-8</maven-resources-plugin.encoding>
+        <maven-compiler-plugin.encoding>UTF-8</maven-compiler-plugin.encoding>
         <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
+        <maven-resources-plugin.version>2.6</maven-resources-plugin.version>
         <junit.version>4.12</junit.version>
         <mockito.version>1.10.19</mockito.version>
         <log4j.version>1.2.17</log4j.version>
@@ -22,7 +24,7 @@
 
     <dependencies>
 
-        <!-- Testing junit and mockito -->
+        <!-- Testing -->
 
         <dependency>
             <groupId>junit</groupId>
@@ -57,17 +59,26 @@
 
     <build>
         <finalName>HelloWorld</finalName>
-        <!--<defaultGoal>package</defaultGoal>-->
+        <defaultGoal>package</defaultGoal>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
-
                 <configuration>
                     <source>${jdk.version}</source>
                     <target>${jdk.version}</target>
-                    <encoding>UTF-8</encoding>
+                    <encoding>${maven-compiler-plugin.encoding}</encoding>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${maven-resources-plugin.version}</version>
+                <configuration>
+                    <encoding>${maven-resources-plugin.encoding}</encoding>
                 </configuration>
             </plugin>
         </plugins>
